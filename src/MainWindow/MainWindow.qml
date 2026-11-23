@@ -1,4 +1,5 @@
 import QtQuick
+import QtQml
 import QtQuick.Controls
 import QtQuick.Dialogs
 import QtQuick.Layouts
@@ -333,6 +334,25 @@ ApplicationWindow {
         sequences:      [ "Back" ]
         enabled:        Qt.platform.os === "android" && mainWindow._closeNeedsConfirmation()
         onActivated:    mainWindow.close()
+    }
+
+    Instantiator {
+        model: {
+            try {
+                var bindings = JSON.parse(QGroundControl.settingsManager.flightModeSettings.keyboardFlightModeBindings.rawValue)
+                return Array.isArray(bindings) ? bindings : []
+            } catch (e) {
+                return []
+            }
+        }
+
+        delegate: Shortcut {
+            sequence:   modelData.key
+            enabled:    activeVehicle && activeVehicle.flightModes.indexOf(modelData.mode) !== -1
+            onActivated: activeVehicle.flightMode = modelData.mode
+
+            property var activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
+        }
     }
 
     background: Rectangle {

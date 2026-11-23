@@ -26,4 +26,5 @@ public:
     DEFINE_SETTINGFACT(apmHiddenFlightModesSub)
     DEFINE_SETTINGFACT(apmHiddenFlightModesAirship)
     DEFINE_SETTINGFACT(requireModeChangeConfirmation)
+    DEFINE_SETTINGFACT(keyboardFlightModeBindings)
 };

@@ -99,6 +99,13 @@
             "type": "bool",
             "default": true,
             "label": "Require confirmation when changing flight modes"
+        },
+        {
+            "name": "keyboardFlightModeBindings",
+            "shortDesc": "JSON list of keyboard key to flight mode bindings",
+            "type": "string",
+            "default": "[]",
+            "label": "Keyboard flight mode bindings"
         }
     ]
 }

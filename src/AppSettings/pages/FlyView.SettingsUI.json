@@ -80,6 +80,17 @@
             ]
         },
         {
+            "component": "KeyboardFlightModeSettings",
+            "sectionName": "Keyboard Flight Modes",
+            "keywords": [
+                "keyboard",
+                "key",
+                "shortcut",
+                "flight mode",
+                "hotkey"
+            ]
+        },
+        {
             "heading": "Virtual Joystick",
             "keywords": ["joystick", "virtual stick", "throttle", "left handed", "auto center"],
             "controls": [

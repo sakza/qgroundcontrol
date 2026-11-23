@@ -74,6 +74,7 @@ qt_add_qml_module(
         BluetoothSettings.qml
         DebugWindow.qml
         HelpSettings.qml
+        KeyboardFlightModeSettings.qml
         LinkConfigurationManager.qml
         LogReplaySettings.qml
         MapProviderSettings.qml
