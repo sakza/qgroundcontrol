@@ -1,5 +1,7 @@
 #include "FlightModeSettings.h"
 
+#include <QtGui/QKeySequence>
+
 DECLARE_SETTINGGROUP(FlightMode, "FlightMode")
 {
 }
@@ -18,3 +20,9 @@ DECLARE_SETTINGSFACT(FlightModeSettings, apmHiddenFlightModesSub)
 DECLARE_SETTINGSFACT(FlightModeSettings, apmHiddenFlightModesAirship)
 DECLARE_SETTINGSFACT(FlightModeSettings, requireModeChangeConfirmation)
 DECLARE_SETTINGSFACT(FlightModeSettings, keyboardFlightModeBindings)
+
+QString FlightModeSettings::keySequenceText(int key, int modifiers)
+{
+    const QKeyCombination combination(Qt::KeyboardModifiers(modifiers), Qt::Key(key));
+    return QKeySequence(combination).toString(QKeySequence::PortableText);
+}

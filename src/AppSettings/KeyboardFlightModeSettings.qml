@@ -16,7 +16,7 @@ QGCGroupBox {
     property var    _vehicle:       QGroundControl.multiVehicleManager.activeVehicle
     property var    _bindings:      _parseBindings()
     property var    _flightModes:   _vehicle ? _vehicle.flightModes : []
-    property int    _capturedKey:   0
+    property string _capturedKey:   ""
 
     function _parseBindings() {
         try {
@@ -39,17 +39,11 @@ QGCGroupBox {
         var bindings = _bindings.filter(binding => binding.key !== _capturedKey)
         bindings.push({ "key": _capturedKey, "mode": modeCombo.currentText })
         _saveBindings(bindings)
-        _capturedKey = 0
+        _capturedKey = ""
     }
 
     function _removeBinding(key) {
         _saveBindings(_bindings.filter(binding => binding.key !== key))
-    }
-
-    Shortcut {
-        id:         capturedKeyName
-        enabled:    false
-        sequence:   root._capturedKey
     }
 
     Repeater {
@@ -59,15 +53,9 @@ QGCGroupBox {
             Layout.fillWidth:   true
             spacing:            ScreenTools.defaultFontPixelWidth
 
-            Shortcut {
-                id:         boundKeyName
-                enabled:    false
-                sequence:   modelData.key
-            }
-
             QGCLabel {
                 Layout.fillWidth:   true
-                text:               qsTr("%1: %2").arg(boundKeyName.nativeText).arg(modelData.mode)
+                text:               qsTr("%1: %2").arg(modelData.key).arg(modelData.mode)
             }
 
             QGCButton {
@@ -91,7 +79,7 @@ QGCGroupBox {
             if (!captureButton.capturing || root._isModifierKey(event.key)) {
                 return
             }
-            root._capturedKey = event.key | event.modifiers
+            root._capturedKey = QGroundControl.settingsManager.flightModeSettings.keySequenceText(event.key, event.modifiers)
             captureButton.capturing = false
             event.accepted = true
         }
@@ -100,7 +88,7 @@ QGCGroupBox {
             id:             captureButton
             anchors.fill:   parent
             text:           capturing ? qsTr("Press a key...") :
-                                        (root._capturedKey ? qsTr("Key: %1").arg(capturedKeyName.nativeText) : qsTr("Capture key"))
+                                        (root._capturedKey !== "" ? qsTr("Key: %1").arg(root._capturedKey) : qsTr("Capture key"))
 
             property bool capturing: false
 
@@ -126,7 +114,7 @@ QGCGroupBox {
 
     QGCButton {
         text:       qsTr("Pair Key")
-        enabled:    root._capturedKey !== 0 && modeCombo.currentText !== ""
+        enabled:    root._capturedKey !== "" && modeCombo.currentText !== ""
         onClicked:  root._addBinding()
     }
 }

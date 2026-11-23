@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QtCore/QString>
 #include <QtQmlIntegration/QtQmlIntegration>
 
 #include "SettingsGroup.h"
@@ -27,4 +28,7 @@ public:
     DEFINE_SETTINGFACT(apmHiddenFlightModesAirship)
     DEFINE_SETTINGFACT(requireModeChangeConfirmation)
     DEFINE_SETTINGFACT(keyboardFlightModeBindings)
+
+    /// Portable key sequence text (e.g. "Ctrl+F1") for a Qt key and keyboard modifiers from a QML key event
+    Q_INVOKABLE static QString keySequenceText(int key, int modifiers);
 };
