@@ -23,6 +23,6 @@ DECLARE_SETTINGSFACT(FlightModeSettings, keyboardFlightModeBindings)
 
 QString FlightModeSettings::keySequenceText(int key, int modifiers)
 {
-    const QKeyCombination combination(Qt::KeyboardModifiers(modifiers), Qt::Key(key));
-    return QKeySequence(combination).toString(QKeySequence::PortableText);
+    const QKeyCombination combination{Qt::KeyboardModifiers{modifiers}, static_cast<Qt::Key>(key)};
+    return QKeySequence{combination}.toString(QKeySequence::PortableText);
 }
